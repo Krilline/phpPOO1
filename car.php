@@ -2,63 +2,30 @@
 
 // Car.php
 
-class Car
+
+require_once 'vehicule.php';
+
+class Car extends Vehicule
 {
-    private $nbWheels = 4;
-    private $currentSpeed;
-    private $color;
-    private $nbSeats;
     private $energy;
-    private $energyLevel = "Bas";
+    private $energyLevel;
+
+    const ALLOWED_ENERGIES = [
+        'Diesel',
+        'Electrique', ];
 
     public function __construct($color, $nbSeats, $energy)
     {
-        $this->color = $color;
-        $this->nbSeats = $nbSeats;
-        $this->energy = $energy;
+        parent::__construct($color, $nbSeats);
+        $this->setEnergy($energy);
     }
 
-    public function forward()
+    public function setEnergy(string $energy): Car
     {
-        $this->currentSpeed = 80;
-
-        return "Première, deuxième, ok beau gosse je vais me cracher sale";
-    }
-
-    public function brake()
-    {      
-        $sentence = "";
-        while ($this->currentSpeed > 0) {
-            $this->currentSpeed--;
-            $sentence .= "Ralenti espèce de fou !";
+        if (in_array($energy, self::ALLOWED_ENERGIES)) {
+            $this->energy = $energy;
         }
-        $sentence .= "Ouf on l'a échappé belle !";
-        return $sentence;
-    }
-
-    public function start()
-    {
-        return "On met le contact c'est parti les amis, VrOoooom Vroooooooooom";
-    }
-
-    public function getNbWheels()
-    {
-        return $this->nbWheels;
-    }
-
-    public function getCurrentSpeed()
-    {
-        return $this->currentSpeed;
-    }
-
-    public function getColor()
-    {
-        return $this->color;
-    }
-
-    public function getNbSeats()
-    {
-        return $this->nbSeats;
+        return $this;
     }
 
     public function getEnergy()
@@ -69,5 +36,10 @@ class Car
     public function getEnergyLevel()
     {
         return $this->energyLevel;
+    }
+
+    public function setEnergyLevel(string $energyLevel): void
+    {
+        $this->energyLevel = $energyLevel;
     }
 }
